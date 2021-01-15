@@ -1,3 +1,4 @@
+--Desc:   Обновление данных по клиенту
 CREATE OR REPLACE PACKAGE WORK_UTIL AS
 
 PROCEDURE TO_LOGS (
