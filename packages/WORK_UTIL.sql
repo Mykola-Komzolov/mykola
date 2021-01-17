@@ -1,18 +1,22 @@
---Desc:   Обновление данных по клиенту
 CREATE OR REPLACE PACKAGE WORK_UTIL AS
 
+--Desc: Логирование действий
 PROCEDURE TO_LOGS (
   P_APP_ID NUMBER,
   P_MESSAGE VARCHAR2,
   P_LOG_DATE DATE,
   P_RETURN_CODE NUMBER);
 
+--Desc: Возврат зарплаты в зависимости от ид сотрудника 
 FUNCTION GETSALARY(EMID IN NUMBER) RETURN NUMBER;
 
+--Desc: Возврат системного времени в зависимости от параметра
 PROCEDURE SYS_TIME_TEMPLATE(P_MODE IN VARCHAR2 DEFAULT 'DD');
 
+--Desc: Удаление таблиц из заданного шаблона в параметре
 PROCEDURE DROP_SELECTS_TBL(P_MODE IN VARCHAR2 DEFAULT 'VIEW', P_TABLES IN VARCHAR2);
 
+--Desc: Обновление данных по клиенту
 PROCEDURE ADD_NEW_EMP 
 (P_FIRST_NAME VARCHAR2,
 P_LAST_NAME VARCHAR2,
@@ -29,6 +33,10 @@ END WORK_UTIL;
 
 CREATE OR REPLACE PACKAGE BODY WORK_UTIL AS
 
+/*******************************************
+Author: Комзолов Н.О. / 17.01.2021
+Desc:   Логирование действий
+********************************************/
 PROCEDURE TO_LOGS (
   P_APP_ID NUMBER,
   P_MESSAGE VARCHAR2,
@@ -47,6 +55,10 @@ VALUES (V_LOG_ID, P_APP_ID, P_MESSAGE, P_LOG_DATE, P_RETURN_CODE);
 COMMIT;  
 END;  
 
+/******************************************************
+Author: Комзолов Н.О. / 17.01.2021
+Desc:   Возврат зарплаты в зависимости от ид сотрудника
+*******************************************************/
 FUNCTION GETSALARY(EMID IN NUMBER) RETURN NUMBER
 IS
 
@@ -63,6 +75,10 @@ EXCEPTION
 	RETURN(V_SALARY);
 END GETSALARY;
 
+/************************************************************
+Author: Комзолов Н.О. / 17.01.2021
+Desc:   Возврат системного времени в зависимости от параметра
+*************************************************************/
 PROCEDURE SYS_TIME_TEMPLATE
 (P_MODE IN VARCHAR2 DEFAULT 'DD')IS
 
@@ -79,6 +95,10 @@ DBMS_OUTPUT.PUT_LINE(V_DATE);
 
 END;
 
+/*******************************************************
+Author: Комзолов Н.О. / 17.01.2021
+Desc:   Удаление таблиц из заданного шаблона в параметре
+********************************************************/
 PROCEDURE DROP_SELECTS_TBL(P_MODE IN VARCHAR2 DEFAULT 'VIEW', P_TABLES IN VARCHAR2) IS
 V_MARK  BOOLEAN := FALSE;
 BEGIN
@@ -102,6 +122,10 @@ END IF;
 
 END;
 
+/*******************************************
+Author: Комзолов Н.О. / 17.01.2021
+Desc:   Обновление данных по клиенту
+********************************************/
 PROCEDURE ADD_NEW_EMP 
 (P_FIRST_NAME VARCHAR2,
 P_LAST_NAME VARCHAR2,
